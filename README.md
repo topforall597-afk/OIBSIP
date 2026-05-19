@@ -13,7 +13,11 @@
 - File: Ashlin_Task1.html
 
 ### Task 2 - Portfolio Website
-- Coming soon
+- Built using HTML & CSS
+- Includes hero, about, skills, projects, and contact sections
+- Editorial dark theme design
+- Fully responsive
+- File: Ashlin_Task2.html
 
 ### Task 3 - Temperature Converter
 - Coming soon
