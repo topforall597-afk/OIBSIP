@@ -20,5 +20,10 @@
 - File: Ashlin_Task2.html
 
 ### Task 3 - Temperature Converter
-- Coming soon
+- Built using HTML, CSS & JavaScript
+- Converts between Celsius, Fahrenheit and Kelvin
+- Live conversion as you type
+- Temperature descriptions and animated thermometer bars
+- Input validation included
+- File: Ashlin_Task3.html
 
