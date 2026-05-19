@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator — Ashlin L</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f0f13;
+      --surface:  #1a1a23;
+      --card:     #22222e;
+      --border:   rgba(255,255,255,0.08);
+      --accent:   #7c6df0;
+      --accent2:  #e85d4a;
+      --text:     #eeeef5;
+      --muted:    rgba(238,238,245,0.4);
+      --btn-bg:   #2a2a38;
+      --btn-hover:#323244;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* BG GLOW */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,109,240,0.08) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeDown 0.5s ease both;
+    }
+    .header-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+    .header h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+    .header h1 span { color: var(--accent); }
+
+    /* CALCULATOR WRAPPER */
+    .calc-wrapper {
+      width: 100%;
+      max-width: 380px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      animation: fadeUp 0.5s ease 0.1s both;
+    }
+
+    /* DISPLAY */
+    .display {
+      padding: 1.5rem 1.75rem 1.25rem;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 0.4rem;
+      position: relative;
+    }
+    .display-history {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-height: 1.2rem;
+      word-break: break-all;
+      text-align: right;
+    }
+    .display-main {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-all;
+      text-align: right;
+      line-height: 1;
+      transition: font-size 0.15s;
+    }
+    .display-main.small  { font-size: 1.8rem; }
+    .display-main.xsmall { font-size: 1.3rem; }
+
+    /* ERROR */
+    .display.error .display-main { color: var(--accent2); }
+
+    /* BUTTONS GRID */
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      padding: 1px;
+    }
+
+    .btn {
+      background: var(--btn-bg);
+      border: none;
+      padding: 1.2rem 0.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, color 0.15s;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:hover  { background: var(--btn-hover); }
+    .btn:active { transform: scale(0.94); }
+
+    /* Ripple */
+    .btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.08);
+      opacity: 0;
+      transition: opacity 0.2s;
+      border-radius: 4px;
+    }
+    .btn:active::after { opacity: 1; }
+
+    /* SPAN 2 */
+    .btn-span2 { grid-column: span 2; }
+
+    /* OPERATOR buttons */
+    .btn-op {
+      background: rgba(124,109,240,0.12);
+      color: var(--accent);
+    }
+    .btn-op:hover { background: rgba(124,109,240,0.22); }
+
+    /* EQUALS button */
+    .btn-eq {
+      background: var(--accent);
+      color: white;
+      font-size: 1.3rem;
+    }
+    .btn-eq:hover { background: #6a5de0; }
+
+    /* CLEAR / special */
+    .btn-clear {
+      background: rgba(232,93,74,0.12);
+      color: var(--accent2);
+    }
+    .btn-clear:hover { background: rgba(232,93,74,0.22); }
+
+    /* ZERO span */
+    .btn-zero { letter-spacing: 2px; }
+
+    /* FOOTER */
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+      animation: fadeUp 0.5s ease 0.2s both;
+    }
+    footer strong { color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.97); }
+      60%  { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .pop { animation: popIn 0.2s ease; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-tag">Level 2 · Task 01 · Oasis Infobyte</div>
+    <h1>Calc<span>ulator</span></h1>
+  </div>
+
+  <div class="calc-wrapper">
+
+    <!-- DISPLAY -->
+    <div class="display" id="display">
+      <div class="display-history" id="history"></div>
+      <div class="display-main" id="screen">0</div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btn-grid">
+
+      <!-- Row 1 -->
+      <button class="btn btn-clear" onclick="clearAll()">AC</button>
+      <button class="btn btn-clear" onclick="toggleSign()">+/−</button>
+      <button class="btn btn-clear" onclick="percentage()">%</button>
+      <button class="btn btn-op"    onclick="setOp('/')">÷</button>
+
+      <!-- Row 2 -->
+      <button class="btn" onclick="appendNum('7')">7</button>
+      <button class="btn" onclick="appendNum('8')">8</button>
+      <button class="btn" onclick="appendNum('9')">9</button>
+      <button class="btn btn-op" onclick="setOp('*')">×</button>
+
+      <!-- Row 3 -->
+      <button class="btn" onclick="appendNum('4')">4</button>
+      <button class="btn" onclick="appendNum('5')">5</button>
+      <button class="btn" onclick="appendNum('6')">6</button>
+      <button class="btn btn-op" onclick="setOp('-')">−</button>
+
+      <!-- Row 4 -->
+      <button class="btn" onclick="appendNum('1')">1</button>
+      <button class="btn" onclick="appendNum('2')">2</button>
+      <button class="btn" onclick="appendNum('3')">3</button>
+      <button class="btn btn-op" onclick="setOp('+')">+</button>
+
+      <!-- Row 5 -->
+      <button class="btn btn-zero btn-span2" onclick="appendNum('0')">0</button>
+      <button class="btn" onclick="appendDot()">.</button>
+      <button class="btn btn-eq" onclick="calculate()">=</button>
+
+    </div>
+  </div>
+
+  <footer>
+    Built by <strong>Ashlin L</strong> · AICTE Oasis Infobyte · 2026
+  </footer>
+
+  <script>
+    let currentVal  = '0';
+    let storedVal   = null;
+    let operator    = null;
+    let shouldReset = false;
+    let historyStr  = '';
+
+    const screen  = document.getElementById('screen');
+    const history = document.getElementById('history');
+    const display = document.getElementById('display');
+
+    function updateScreen(val) {
+      screen.textContent = val;
+      // Shrink font if number is long
+      const len = val.toString().length;
+      screen.classList.remove('small', 'xsmall');
+      if (len > 12) screen.classList.add('xsmall');
+      else if (len > 8) screen.classList.add('small');
+
+      // Pop animation
+      screen.classList.remove('pop');
+      void screen.offsetWidth;
+      screen.classList.add('pop');
+    }
+
+    function appendNum(num) {
+      display.classList.remove('error');
+      if (shouldReset) {
+        currentVal = num;
+        shouldReset = false;
+      } else {
+        currentVal = currentVal === '0' ? num : currentVal + num;
+      }
+      // Limit digits
+      if (currentVal.replace('-','').replace('.','').length > 15) return;
+      updateScreen(currentVal);
+    }
+
+    function appendDot() {
+      if (shouldReset) { currentVal = '0'; shouldReset = false; }
+      if (!currentVal.includes('.')) {
+        currentVal += '.';
+        updateScreen(currentVal);
+      }
+    }
+
+    function setOp(op) {
+      display.classList.remove('error');
+      if (operator && !shouldReset) {
+        calculate(true);
+      }
+      storedVal  = parseFloat(currentVal);
+      operator   = op;
+      shouldReset = true;
+
+      const symbols = { '+':'+', '-':'−', '*':'×', '/':'÷' };
+      historyStr = storedVal + ' ' + symbols[op];
+      history.textContent = historyStr;
+    }
+
+    function calculate(silent = false) {
+      if (operator === null || storedVal === null) return;
+      display.classList.remove('error');
+
+      const curr = parseFloat(currentVal);
+      const symbols = { '+':'+', '-':'−', '*':'×', '/':'÷' };
+      let result;
+
+      switch (operator) {
+        case '+': result = storedVal + curr; break;
+        case '-': result = storedVal - curr; break;
+        case '*': result = storedVal * curr; break;
+        case '/':
+          if (curr === 0) {
+            updateScreen('Error');
+            history.textContent = '';
+            display.classList.add('error');
+            operator = null; storedVal = null;
+            currentVal = '0'; shouldReset = true;
+            return;
+          }
+          result = storedVal / curr;
+          break;
+      }
+
+      if (!silent) {
+        history.textContent = historyStr + ' ' + curr + ' =';
+        operator  = null;
+        storedVal = null;
+      }
+
+      // Handle floating point precision
+      result = parseFloat(result.toPrecision(12));
+      currentVal = result.toString();
+      shouldReset = !silent;
+      updateScreen(currentVal);
+    }
+
+    function clearAll() {
+      currentVal  = '0';
+      storedVal   = null;
+      operator    = null;
+      shouldReset = false;
+      historyStr  = '';
+      history.textContent = '';
+      display.classList.remove('error');
+      updateScreen('0');
+    }
+
+    function toggleSign() {
+      if (currentVal === '0') return;
+      currentVal = (parseFloat(currentVal) * -1).toString();
+      updateScreen(currentVal);
+    }
+
+    function percentage() {
+      currentVal = (parseFloat(currentVal) / 100).toString();
+      updateScreen(currentVal);
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      if (e.key >= '0' && e.key <= '9') appendNum(e.key);
+      else if (e.key === '.') appendDot();
+      else if (e.key === '+') setOp('+');
+      else if (e.key === '-') setOp('-');
+      else if (e.key === '*') setOp('*');
+      else if (e.key === '/') { e.preventDefault(); setOp('/'); }
+      else if (e.key === 'Enter' || e.key === '=') calculate();
+      else if (e.key === 'Backspace') {
+        if (currentVal.length > 1) {
+          currentVal = currentVal.slice(0, -1);
+          updateScreen(currentVal);
+        } else {
+          currentVal = '0';
+          updateScreen('0');
+        }
+      }
+      else if (e.key === 'Escape') clearAll();
+    });
+  </script>
+
+</body>
+</html>
