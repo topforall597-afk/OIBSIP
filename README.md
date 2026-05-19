@@ -6,20 +6,20 @@
 
 ## Tasks
 
-### LEVEL 1:Task 1 - Landing Page
+### Task 1 - Landing Page
 - Built using HTML & CSS
 - Includes hero section, about, skills, and contact sections
 - Fully responsive design
 - File: Ashlin_Task1.html
 
-### LEVEL 1:Task 2 - Portfolio Website
+### Task 2 - Portfolio Website
 - Built using HTML & CSS
 - Includes hero, about, skills, projects, and contact sections
 - Editorial dark theme design
 - Fully responsive
 - File: Ashlin_Task2.html
 
-### LEVEL 1:Task 3 - Temperature Converter
+### Task 3 - Temperature Converter
 - Built using HTML, CSS & JavaScript
 - Converts between Celsius, Fahrenheit and Kelvin
 - Live conversion as you type
