@@ -49,3 +49,10 @@
 - Pending and Completed tabs
 - Date and time tracking
 - File: Ashlin_Task6.html
+
+### Task 7 - Login Authentication (Level 2)
+- Built using HTML, CSS & JavaScript
+- Register, Login and secured dashboard pages
+- Password strength meter and validation
+- Show/hide password toggle
+- File: Ashlin_Task7.html
