@@ -42,3 +42,10 @@
 - Includes biography, timeline, awards and quotes
 - File: Ashlin_Task5.html
 
+### Task 6 - To-Do App (Level 2)
+- Built using HTML, CSS & JavaScript
+- Add, edit, delete tasks
+- Mark tasks as complete
+- Pending and Completed tabs
+- Date and time tracking
+- File: Ashlin_Task6.html
