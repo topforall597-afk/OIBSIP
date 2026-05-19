@@ -27,3 +27,12 @@
 - Input validation included
 - File: Ashlin_Task3.html
 
+### Task 4 - Calculator (Level 2)
+- Built using HTML, CSS & JavaScript
+- Supports addition, subtraction, multiplication and division
+- Displays equation history on screen
+- Includes AC, +/− and % functions
+- Divide by zero error handling
+- Keyboard support
+- File: Ashlin_Task4.html
+
