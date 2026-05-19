@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dr. APJ Abdul Kalam — Tribute Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0c0c0e;
+      --surface: #141418;
+      --card:    #1c1c22;
+      --border:  rgba(255,255,255,0.07);
+      --gold:    #d4a843;
+      --orange:  #e8793a;
+      --blue:    #4a90d9;
+      --text:    #eeecf0;
+      --muted:   rgba(238,236,240,0.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,168,67,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(74,144,217,0.05) 0%, transparent 60%);
+    }
+
+    /* PORTRAIT */
+    .portrait-wrap {
+      position: relative;
+      width: 180px; height: 180px;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.7s ease both;
+    }
+    .portrait {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e1e2a, #2a2a3a);
+      border: 3px solid rgba(212,168,67,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem; font-weight: 900;
+      color: var(--gold);
+      position: relative; overflow: hidden;
+    }
+    .portrait::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(212,168,67,0.15), transparent 60%);
+    }
+    .portrait-ring {
+      position: absolute; inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,168,67,0.2);
+      animation: spin 20s linear infinite;
+    }
+    .portrait-ring::before {
+      content: '★';
+      position: absolute; top: -6px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem; color: var(--gold);
+    }
+    @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold);
+      padding: 0.35rem 1rem;
+      border: 1px solid rgba(212,168,67,0.25);
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -2px; line-height: 1;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.7s ease 0.15s both;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+
+    .hero-dates {
+      font-size: 0.82rem; color: var(--muted);
+      letter-spacing: 2px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-quote {
+      max-width: 600px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: rgba(238,236,240,0.7);
+      line-height: 1.6;
+      position: relative;
+      padding: 0 2rem;
+      animation: fadeUp 0.7s ease 0.25s both;
+    }
+    .hero-quote::before, .hero-quote::after {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; color: var(--gold);
+      opacity: 0.3;
+      position: absolute; line-height: 1;
+    }
+    .hero-quote::before { top: -0.5rem; left: 0; }
+    .hero-quote::after  { content: '"'; bottom: -1.5rem; right: 0; }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+      animation: fadeUp 1s ease 0.5s both;
+    }
+    .scroll-arrow {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 1.5s ease infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 3rem;
+    }
+
+    /* SECTION */
+    .section {
+      max-width: 900px; margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+    .section-label {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700; letter-spacing: -1px;
+      line-height: 1.2; margin-bottom: 1.5rem;
+    }
+    .section h2 em { color: var(--gold); font-style: italic; }
+    .section p {
+      color: var(--muted); line-height: 1.8;
+      font-size: 0.97rem; margin-bottom: 1rem;
+    }
+    .section p strong { color: var(--text); }
+
+    /* TIMELINE */
+    .timeline { margin-top: 2.5rem; }
+    .tl-item {
+      display: flex; gap: 1.5rem;
+      padding-bottom: 2rem;
+      position: relative;
+    }
+    .tl-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 3.3rem; top: 2.5rem; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .tl-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--gold); min-width: 3rem;
+      padding-top: 0.2rem; text-align: right;
+      flex-shrink: 0;
+    }
+    .tl-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--bg);
+      flex-shrink: 0; margin-top: 0.35rem;
+      position: relative; z-index: 1;
+    }
+    .tl-content h4 {
+      font-size: 0.95rem; font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .tl-content p {
+      font-size: 0.83rem; color: var(--muted);
+      line-height: 1.6; margin: 0;
+    }
+
+    /* AWARDS GRID */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem; margin-top: 2rem;
+    }
+    .award-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .award-card:hover { transform: translateY(-3px); border-color: rgba(212,168,67,0.25); }
+    .award-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .award-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .award-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; margin: 0; }
+
+    /* QUOTES SECTION */
+    .quotes-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem;
+    }
+    .quotes-inner { max-width: 900px; margin: 0 auto; }
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem; margin-top: 2.5rem;
+    }
+    .quote-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.75rem;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .quote-card:hover { transform: translateY(-3px); }
+    .quote-card::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; color: var(--gold);
+      opacity: 0.15; line-height: 1;
+      position: absolute; top: 0.5rem; left: 1rem;
+    }
+    .quote-card p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.92rem; line-height: 1.6;
+      color: rgba(238,236,240,0.75);
+      margin: 0; position: relative; z-index: 1;
+    }
+
+    /* LEGACY */
+    .legacy-section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+    .legacy-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-top: 2rem;
+    }
+    .legacy-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      border-left: 3px solid var(--gold);
+    }
+    .legacy-item h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--gold); }
+    .legacy-item p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--muted);
+    }
+    footer strong { color: var(--gold); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 600px) {
+      .legacy-grid { grid-template-columns: 1fr; }
+      .hero h1 { letter-spacing: -1px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="portrait-wrap">
+      <div class="portrait">A</div>
+      <div class="portrait-ring"></div>
+    </div>
+    <div class="hero-tag">Tribute Page · Level 2 Task 2</div>
+    <h1>Dr. <em>APJ</em><br>Abdul Kalam</h1>
+    <div class="hero-dates">15 October 1931 — 27 July 2015</div>
+    <blockquote class="hero-quote">
+      You have to dream before your dreams can come true.
+    </blockquote>
+    <div class="scroll-hint">
+      <div class="scroll-arrow"></div>
+      Scroll
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="section reveal">
+    <div class="section-label">About</div>
+    <h2>The <em>People's President</em> of India</h2>
+    <p>Dr. Avul Pakir Jainulabdeen Abdul Kalam, widely known as the <strong>Missile Man of India</strong>, was a legendary aerospace scientist who served as the <strong>11th President of India</strong> from 2002 to 2007.</p>
+    <p>Born in a humble family in Rameswaram, Tamil Nadu, Kalam rose through sheer determination and brilliance to become one of India's most celebrated scientists and statesmen. He played a pivotal role in India's civilian space program and military missile development.</p>
+    <p>Even after his presidency, he dedicated his life to inspiring the youth of India, teaching at universities and delivering lectures across the country until his very last day — he passed away while doing what he loved most: <strong>teaching students</strong>.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE -->
+  <section class="section reveal">
+    <div class="section-label">Life Journey</div>
+    <h2>A Life of <em>Purpose</em></h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1931</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Born in Rameswaram, Tamil Nadu</h4>
+          <p>Born into a modest family, Kalam delivered newspapers to support his family's income from a young age.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1954</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Graduated in Physics — St. Joseph's College</h4>
+          <p>Completed his physics degree, then went on to study aerospace engineering at MIT, Chennai.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1969</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Joined ISRO — India's Space Program</h4>
+          <p>Became project director of India's first Satellite Launch Vehicle (SLV-III), which successfully deployed the Rohini satellite in 1980.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1983</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Directed India's Missile Development — DRDO</h4>
+          <p>Led the Integrated Guided Missile Development Programme (IGMDP), developing missiles like Agni and Prithvi — earning him the title "Missile Man of India."</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1998</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Pokhran-II Nuclear Tests</h4>
+          <p>Played a key role in India's second successful nuclear tests, establishing India as a nuclear power.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2002</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Elected 11th President of India</h4>
+          <p>Became the People's President, known for his accessibility, humility, and deep connection with the youth of India.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2015</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Passed Away While Teaching</h4>
+          <p>Collapsed during a lecture at IIM Shillong on July 27, 2015. He died doing what he loved — inspiring young minds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- AWARDS -->
+  <section class="section reveal">
+    <div class="section-label">Honours & Awards</div>
+    <h2>Recognition of <em>Excellence</em></h2>
+    <div class="awards-grid">
+      <div class="award-card">
+        <div class="award-icon">🏅</div>
+        <h4>Bharat Ratna — 1997</h4>
+        <p>India's highest civilian honour, awarded for his exceptional contributions to science and public service.</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🎖️</div>
+        <h4>Padma Vibhushan — 1990</h4>
+        <p>India's second highest civilian award, recognising his distinguished service in science and engineering.</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🏆</div>
+        <h4>Padma Bhushan — 1981</h4>
+        <p>Awarded for his early contributions to India's aerospace and defence research programs.</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🌟</div>
+        <h4>Hoover Medal — 2009</h4>
+        <p>Given by ASME Foundation for outstanding extra-career service by engineers to humanity.</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">📚</div>
+        <h4>Honorary Doctorates</h4>
+        <p>Received over 40 honorary doctorates from universities across India and the world.</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🚀</div>
+        <h4>Von Braun Award — 2013</h4>
+        <p>Awarded by the National Space Society for excellence in space science and exploration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTES -->
+  <section class="quotes-section reveal">
+    <div class="quotes-inner">
+      <div class="section-label">Wisdom</div>
+      <h2>Words That <em>Inspire Millions</em></h2>
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <p>Dream, dream, dream. Dreams transform into thoughts and thoughts result in action.</p>
+        </div>
+        <div class="quote-card">
+          <p>Don't take rest after your first victory because if you fail in second, more lips are waiting to say that your first victory was just luck.</p>
+        </div>
+        <div class="quote-card">
+          <p>All of us do not have equal talent. But all of us have an equal opportunity to develop our talents.</p>
+        </div>
+        <div class="quote-card">
+          <p>If you want to shine like a sun, first burn like a sun.</p>
+        </div>
+        <div class="quote-card">
+          <p>Excellence is a continuous process and not an accident.</p>
+        </div>
+        <div class="quote-card">
+          <p>To succeed in your mission, you must have single-minded devotion to your goal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGACY -->
+  <section class="legacy-section reveal">
+    <div class="section-label">Legacy</div>
+    <h2>A Legacy That <em>Lives On</em></h2>
+    <p>Dr. Kalam's legacy continues to inspire generations of Indians and people worldwide. His vision of a developed India by 2020, his passion for education, and his humble humanity remain timeless.</p>
+    <div class="legacy-grid">
+      <div class="legacy-item">
+        <h4>🚀 Missile Man of India</h4>
+        <p>Transformed India's defence capabilities with Agni, Prithvi, Akash, Trishul and Nag missile systems.</p>
+      </div>
+      <div class="legacy-item">
+        <h4>🛸 Father of India's Space Program</h4>
+        <p>His work at ISRO laid the foundation for India becoming a global space power.</p>
+      </div>
+      <div class="legacy-item">
+        <h4>📖 Author & Teacher</h4>
+        <p>Wrote iconic books like "Wings of Fire", "Ignited Minds", and "India 2020" that inspired millions.</p>
+      </div>
+      <div class="legacy-item">
+        <h4>❤️ People's President</h4>
+        <p>Known for visiting remote villages, meeting children, and being the most accessible President India ever had.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>A tribute to <strong>Dr. APJ Abdul Kalam</strong> — Scientist, President, Teacher, Dreamer</p>
+    <p style="margin-top:0.5rem">Built by <strong>Ashlin L</strong> · AICTE Oasis Infobyte Web Dev Internship · 2026</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+  </script>
+
+</body>
+</html>
