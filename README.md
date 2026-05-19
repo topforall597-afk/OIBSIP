@@ -36,3 +36,9 @@
 - Keyboard support
 - File: Ashlin_Task4.html
 
+### Task 5 - Tribute Page (Level 2)
+- Built using HTML & CSS
+- Tribute to Dr. APJ Abdul Kalam
+- Includes biography, timeline, awards and quotes
+- File: Ashlin_Task5.html
+
