@@ -56,3 +56,14 @@
 - Password strength meter and validation
 - Show/hide password toggle
 - File: Ashlin_Task7.html
+
+### Task 8 - Pizza Delivery App (Level 3)
+- Built using HTML, CSS & JavaScript
+- User registration and login system
+- Admin and customer roles
+- Custom pizza builder (base, sauce, cheese, toppings)
+- Order placement with payment options (Card, UPI, COD, Wallet)
+- Order tracking with status updates
+- Admin dashboard with order management
+- Inventory management system with low stock alerts
+- File: Ashlin_Task8.html
